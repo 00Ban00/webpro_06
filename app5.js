@@ -64,4 +64,69 @@ app.get("/janken", (req, res) => {
   res.render( 'janken', display );
 });
 
+app.get("/dice", (req, res) => {
+  let total = Number(req.query.total) || 0;
+  let dice1 = req.query.dice1;
+  let dice2 = req.query.dice2;
+  let diceMessage = '';
+  let gameEnd = false;
+
+  if (!dice1 && !dice2) {
+    dice1 = 1; 
+    res.render('dice', {
+      dice1: dice1,
+      dice2: null,
+      total: total,
+      diceMessage: '最初に振ったサイコロの目は 1 です。',
+      gameEnd: false
+    });
+  } else {
+    
+    const userDice = Math.floor(Math.random() * 6) + 1; 
+
+    if (userDice === 1) {
+      diceMessage = '1が出たので、ゲーム継続！';
+      total += 1;  
+    } else {
+      diceMessage = '1以外の目が出たので、ゲーム終了です。';
+      gameEnd = true;  
+    }
+
+    res.render('dice', {
+      dice1: dice1,  
+      dice2: userDice,  
+      total: total,
+      diceMessage: diceMessage,
+      gameEnd: gameEnd
+    });
+  }
+});
+
+app.get('/zodiac', (req, res) => {
+  const date = new Date(req.query.date);
+  const month = date.getMonth() + 1; 
+  const day = date.getDate();
+
+  let zodiac = '不明';
+
+  if ((month === 1 && day >= 20) || (month === 2 && day <= 18)) zodiac = '水瓶座';
+  else if ((month === 2 && day >= 19) || (month === 3 && day <= 20)) zodiac = '魚座';
+  else if ((month === 3 && day >= 21) || (month === 4 && day <= 19)) zodiac = '牡羊座';
+  else if ((month === 4 && day >= 20) || (month === 5 && day <= 20)) zodiac = '牡牛座';
+  else if ((month === 5 && day >= 21) || (month === 6 && day <= 20)) zodiac = '双子座';
+  else if ((month === 6 && day >= 21) || (month === 7 && day <= 22)) zodiac = '蟹座';
+  else if ((month === 7 && day >= 23) || (month === 8 && day <= 22)) zodiac = '獅子座';
+  else if ((month === 8 && day >= 23) || (month === 9 && day <= 22)) zodiac = '乙女座';
+  else if ((month === 9 && day >= 23) || (month === 10 && day <= 22)) zodiac = '天秤座';
+  else if ((month === 10 && day >= 23) || (month === 11 && day <= 21)) zodiac = '蠍座';
+  else if ((month === 11 && day >= 22) || (month === 12 && day <= 21)) zodiac = '射手座';
+  else if ((month === 12 && day >= 22) || (month === 1 && day <= 19)) zodiac = '山羊座';
+
+  res.send(`あなたの星座は${zodiac}です。`);
+});
+
+app.get("/zodiac-form", (req, res) => {
+  res.render('zodiac-form');
+});
+
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
