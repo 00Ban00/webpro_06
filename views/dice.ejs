@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>サイコロゲーム</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .game-container {
+      margin-top: 30px;
+    }
+    .result {
+      margin-top: 20px;
+      font-size: 1.2em;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>サイコロゲーム</h1>
+
+  <div class="game-container">
+    <h2>最初に振ったサイコロの目: <%= dice1 %></h2>
+    <h3>あなたが振ったサイコロの目: <%= dice2 %></h3>
+    <p><%= diceMessage %></p>
+    <p>継続した回数: <%= total %></p>
+  </div>
+
+  <% if (!gameEnd) { %>
+    <div class="game-container">
+      <h3>サイコロを振りますか？</h3>
+      <form action="/dice" method="get">
+        <input type="hidden" name="total" value="<%= total %>">
+        <input type="hidden" name="dice1" value="<%= dice1 %>">
+        <input type="hidden" name="dice2" value="<%= dice2 %>">
+        <button type="submit">サイコロを振る</button>
+      </form>
+    </div>
+  <% } else { %>
+    <div class="game-container">
+      <h3>ゲーム終了！</h3>
+      <p>最終結果です。</p>
+    </div>
+  <% } %>
+
+  <% if (!gameEnd) { %>
+    <div class="game-container">
+      <h3>サイコロを振らない場合</h3>
+      <form action="/dice" method="get">
+        <input type="hidden" name="total" value="<%= total %>">
+        <input type="hidden" name="dice1" value="<%= dice1 %>">
+        <input type="hidden" name="dice2" value="<%= dice2 %>">
+        <button type="submit" name="diceRolled" value="no">サイコロを振らない</button>
+      </form>
+    </div>
+  <% } %>
+
+</body>
+</html>
