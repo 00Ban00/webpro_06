@@ -1,0 +1,53 @@
+.cover {
+    border-bottom: 1px solid #c0c0c0;
+    margin: 3px;
+    padding-bottom: 10px;
+}
+
+.name {
+    font-weight: bold;
+    width: 8em;
+}
+
+.mes {
+    margin-left: 30px;
+}
+
+.like-button {
+    background-color: #f0f0f0;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.like-button.liked {
+    background-color: #f0f0f0;
+}
+
+.like-count {
+    margin-left: 10px;
+    font-size: 0.9em;
+    color: #777;
+}
+
+.delete-button {
+    background-color: #ffcccc;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.delete-button:hover {
+    background-color: #ff9999;
+}
+
+.reply {
+    margin-left: 30px;
+    padding: 10px;
+    border-left: 2px solid #ccc;
+    background-color: #f9f9f9;
+}
+
+
