@@ -70,11 +70,10 @@ app.post("/add", (req, res) => {
   res.json({ answer: num1 + num2 });
 });
 
-// BBS関連
 app.post("/post", (req, res) => {
   const name = req.body.name;
   const message = req.body.message;
-  const timestamp = req.body.timestamp;  // 投稿日時を受け取る
+  const timestamp = req.body.timestamp;
   console.log([name, message, timestamp]);
 
   const newPost = { 
@@ -82,14 +81,13 @@ app.post("/post", (req, res) => {
       name: name, 
       message: message, 
       likes: 0,
-      timestamp: timestamp,  // 投稿日時を格納
-      replies: []  // 返信を格納する配列
+      timestamp: timestamp, 
+      replies: []  
   };
   bbs.push(newPost);
   res.json({ number: bbs.length });
 });
 
-// 返信処理
 app.post("/reply", (req, res) => {
   const id = Number(req.body.id);
   const message = req.body.message;
@@ -97,7 +95,7 @@ app.post("/reply", (req, res) => {
 
   if (post) {
       const reply = {
-          name: "返信",  // ここはユーザー名に変更可能
+          name: "返信", 
           message: message
       };
       post.replies.push(reply);
@@ -107,7 +105,6 @@ app.post("/reply", (req, res) => {
   }
 });
 
-// いいね処理
 app.post("/like", (req, res) => {
   const id = Number(req.body.id);
   console.log("Like for post ID:", id);
@@ -115,32 +112,29 @@ app.post("/like", (req, res) => {
   const post = bbs.find(p => p.id === id);
   if (post) {
       post.likes += 1;
-      res.json(post);  // 更新された投稿情報を返す
+      res.json(post);  
   } else {
       res.status(404).send("Post not found");
   }
 });
 
-// 投稿削除
 app.post("/delete", (req, res) => {
   const id = Number(req.body.id);
   console.log("Delete post ID:", id);
 
   const postIndex = bbs.findIndex(p => p.id === id);
   if (postIndex !== -1) {
-      bbs.splice(postIndex, 1);  // 投稿を削除
+      bbs.splice(postIndex, 1);  
       res.json({ message: "Post deleted successfully" });
   } else {
       res.status(404).send("Post not found");
   }
 });
 
-// 投稿チェック
 app.post("/check", (req, res) => {
   res.json({ number: bbs.length });
 });
 
-// 投稿を読み込む
 app.post("/read", (req, res) => {
   const start = Number(req.body.start);
   console.log("read -> " + start);
