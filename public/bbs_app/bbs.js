@@ -6,7 +6,7 @@ const bbs = document.querySelector('#bbs');
 document.querySelector('#post').addEventListener('click', () => {
     const name = document.querySelector('#name').value;
     const message = document.querySelector('#message').value;
-    const timestamp = new Date().toLocaleString();  // 現在日時を取得
+    const timestamp = new Date().toLocaleString(); 
 
     const params = {
         method: "POST",
@@ -71,7 +71,7 @@ document.querySelector('#check').addEventListener('click', () => {
                     .then((response) => {
                         number += response.messages.length;
                         for (let mes of response.messages) {
-                            console.log(mes);  // 表示する投稿
+                            console.log(mes);  
                             let cover = document.createElement('div');
                             cover.className = 'cover';
 
@@ -90,13 +90,13 @@ document.querySelector('#check').addEventListener('click', () => {
                             cover.appendChild(mes_area);
                             cover.appendChild(timestamp_area);
 
-                            // 返信ボタンの作成
+                            
                             let replyButton = document.createElement('button');
                             replyButton.className = 'reply-button';
                             replyButton.innerText = '返信';
-                            replyButton.dataset.id = mes.id;  // 投稿のIDを設定
+                            replyButton.dataset.id = mes.id;  
 
-                            // 返信フォームの作成
+                            
                             let replyForm = document.createElement('div');
                             replyForm.className = 'reply-form';
                             let replyMessageInput = document.createElement('input');
@@ -104,7 +104,7 @@ document.querySelector('#check').addEventListener('click', () => {
                             replyMessageInput.placeholder = '返信を入力...';
                             let replySubmitButton = document.createElement('button');
                             replySubmitButton.innerText = '返信する';
-                            replySubmitButton.dataset.id = mes.id;  // 投稿のIDを設定
+                            replySubmitButton.dataset.id = mes.id; 
 
                             replySubmitButton.addEventListener('click', () => {
                                 const replyMessage = replyMessageInput.value;
@@ -124,7 +124,7 @@ document.querySelector('#check').addEventListener('click', () => {
                                         return response.json();
                                     })
                                     .then((updatedPost) => {
-                                        // 返信が追加された後にその投稿の下に返信を表示
+                                        
                                         let replyArea = document.createElement('div');
                                         replyArea.className = 'reply';
                                         let replyName = document.createElement('span');
@@ -136,23 +136,23 @@ document.querySelector('#check').addEventListener('click', () => {
 
                                         replyArea.appendChild(replyName);
                                         replyArea.appendChild(replyMessage);
-                                        cover.appendChild(replyArea); // 返信を表示
-                                        replyMessageInput.value = ''; // 入力欄をクリア
+                                        cover.appendChild(replyArea); 
+                                        replyMessageInput.value = ''; 
                                     });
                             });
 
-                            // 投稿に返信フォームが追加された後、返信ボタンは非表示
+                            
                             replyButton.style.display = 'none';
                             replyForm.appendChild(replyMessageInput);
                             replyForm.appendChild(replySubmitButton);
 
-                            // 削除ボタンの作成
+                            
                             let deleteButton = document.createElement('button');
                             deleteButton.className = 'delete-button';
                             deleteButton.innerText = '削除';
-                            deleteButton.dataset.id = mes.id;  // 投稿のIDを設定
+                            deleteButton.dataset.id = mes.id;  
 
-                            // 削除ボタンのイベントリスナー
+                           
                             deleteButton.addEventListener('click', () => {
                                 const params = {
                                     method: 'POST',
@@ -170,23 +170,23 @@ document.querySelector('#check').addEventListener('click', () => {
                                         return response.json();
                                     })
                                     .then(() => {
-                                        // 削除後、表示を更新
+                                        
                                         cover.remove();
                                     });
                             });
 
-                            // いいねボタンの作成
+                            
                             let likeButton = document.createElement('button');
                             likeButton.className = 'like-button';
                             likeButton.innerText = 'いいね';
-                            likeButton.dataset.id = mes.id;  // 投稿のIDを設定
+                            likeButton.dataset.id = mes.id;  
 
-                            // いいねのカウント表示
+                            
                             let likeCount = document.createElement('span');
                             likeCount.className = 'like-count';
                             likeCount.innerText = `いいね: ${mes.likes}`;
 
-                            // いいねボタンのイベントリスナー
+                            
                             likeButton.addEventListener('click', () => {
                                 const params = {
                                     method: 'POST',
@@ -204,7 +204,7 @@ document.querySelector('#check').addEventListener('click', () => {
                                         return response.json();
                                     })
                                     .then((updatedMes) => {
-                                        // いいねが更新された後、ボタンとカウントを更新
+                                       
                                         likeCount.innerText = `いいね: ${updatedMes.likes}`;
                                         likeButton.classList.toggle('liked');
                                     });
@@ -212,8 +212,8 @@ document.querySelector('#check').addEventListener('click', () => {
 
                             cover.appendChild(likeButton);
                             cover.appendChild(likeCount);
-                            cover.appendChild(deleteButton);  // 削除ボタンを追加
-                            cover.appendChild(replyForm); // 返信フォームを追加
+                            cover.appendChild(deleteButton);  
+                            cover.appendChild(replyForm); 
 
                             bbs.appendChild(cover);
                         }
